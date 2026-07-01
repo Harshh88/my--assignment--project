@@ -1,0 +1,15 @@
+
+config.json
+secret_key.txt
+
+
+node_modules/
+dist/
+build/
+
+
+.env
+
+
+*.log
+*.mp4
