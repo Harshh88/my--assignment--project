@@ -93,3 +93,30 @@ Note: The Next.js web server loop is explicitly configured to establish dynamic 
 Built with Next.js Client Engine, scalable service layers, and production-ready security patterns for Primetrade.ai.
 
 
+### 📦 4. Importing API Documentation (Postman)
+The repository includes a pre-configured Postman Collection payload containing all validated application testing endpoints.
+- Locate the **`backend/api-docs.json`** file in the cloned repository.
+- Open your Postman client, click on the **Import** button at the top-left corner.
+- Drag and drop the `api-docs.json` file to instantly mount the complete request matrix (`Register`, `Login`, `Get Tasks`, `Create Task`, `Toggle Block User`) pre-loaded with dynamic headers and dummy payloads.
+
+
+
+
+
+🧠 Enterprise Scalability & Future Architecture Note
+
+To transition this monolithic application into a resilient, high-throughput enterprise ecosystem processing millions of queries, the following architectural design structures are proposed:
+
+### 1. Microservices Decoupling
+The architecture can be horizontally sliced into three decoupled domains: **Auth-Service**, **Task-Engine**, and **Admin-Analytics-Service**. Communication will be handled via asynchronous message brokers like Apache Kafka or RabbitMQ for decoupled tasks, and high-performance gRPC protocols for synchronous internal RPC communication.
+
+### 2. Caching Engine Layer (Redis Cluster)
+To bypass expensive database scans on high-frequency requests (such as fetching global tasks or frequent user-block parameter verifications), an in-memory Redis caching cluster will be introduced. Implementing cache invalidation strategic workflows (Write-Through / Cache-Aside patterns) ensures instantaneous lookups with sub-millisecond response matrices.
+
+### 3. Database Optimization & Connection Resilience
+As structural rows grow, the PostgreSQL database will execute a master-slave replication scheme pattern. All incoming write requests target the primary master instance, while intensive metrics analytical scans scale horizontally out to secondary read-replicas. For large datasets, database sharding using Hashing on the `user_id` field will distribute spatial loads across partitioned cluster pools.
+
+### 4. Load Balancing & Reverse Proxy Architecture
+An Nginx reverse proxy instance acting as an API Gateway will sit at the edge, applying advanced round-robin load-balancing workflows across clustered server nodes. Rate-limiting strategies (Token Bucket algorithms) will be introduced to safeguard backend interfaces against Distributed Denial of Service (DDoS) exploitation vectors.
+
+
